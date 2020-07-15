@@ -1,5 +1,6 @@
 package com.example.demo.application.controller;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,8 @@ public class LoginController {
 	@ResponseBody
 	public ResponseEntity<Object> getLogin(@RequestBody @Validated LoginBody request) throws Exception {
 		log.info("ログイン処理開始");
+		// log.info(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()));
+
 		//リクエストのIDからユーザ情報を取得
 		User user = loginService.findUser(request.getId());
 		//ユーザがDB上に存在しない場合は、エラーレスポンスを返却する
@@ -44,7 +47,7 @@ public class LoginController {
 
 		//パスワードを検証して、トークンを発行
 		//パスワードが不正の場合は、エラーレスポンスを返却
-		if(request.getPassword().equals(user.getPassword())) {
+		if(BCrypt.checkpw(request.getPassword(), user.getPassword())) {
 			String token = loginService.createToken(user.getUserId(), user.getAuthority());
 			return new ResponseEntity<>(new LoginResponse(true, token),
 					new HttpHeaders(),HttpStatus.OK);
