@@ -1,8 +1,34 @@
 # Spring boot 開発おためし用
 ## RestAPIサンプル
 
+***
+
 ###　実装機能
-TODO
+
+#### ログインAPI (method:POST,path:/login)
+ 入力されたID,passwordをDBないの値と比較し、OKなら認可用のトークンを返却する
+
+```json
+request body
+{"id":"userid", "password":"password"}
+
+response body
+{"result":true, "token":"randomstring"}
+
+```
+
+
+#### トークン検証サンプルAPI (method:GET,path:/authsample)
+ ログインAPIで払い出されたtokenをリクエストのヘッダに設定する。正しい値であれば正常レスポンスを返却
+
+ ```
+ request header
+ Authorization: randomstring
+
+
+ ```
+
+***
 
 ### 参考にしたサイト
 - プロジェクト構成　
