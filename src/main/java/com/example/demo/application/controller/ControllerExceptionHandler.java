@@ -27,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
+
+	// 全てのハンドリングの共通処理をするためオーバーライド
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request){
@@ -37,6 +39,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 
+	// springbootで用意されている例外に関しては、例外ごとに専用のメソッドが用意されているため、
+	// それをoverrideする
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request){
