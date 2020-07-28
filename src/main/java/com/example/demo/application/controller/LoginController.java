@@ -48,7 +48,7 @@ public class LoginController {
 		//パスワードを検証して、トークンを発行
 		//パスワードが不正の場合は、エラーレスポンスを返却
 		if(BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-			String token = loginService.createToken(user.getUserId(), user.getAuthority());
+			String token = loginService.createToken(user.getUserNo(), user.getAuthority());
 			return new ResponseEntity<>(new LoginResponse(true, token),
 					new HttpHeaders(),HttpStatus.OK);
 		} else {

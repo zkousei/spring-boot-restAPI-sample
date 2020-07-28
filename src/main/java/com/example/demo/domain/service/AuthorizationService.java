@@ -19,7 +19,7 @@ public class AuthorizationService {
 	@Autowired
 	private AuthorizationRepository authorizationRepository;
 
-	public void verifyToken(String accessToken, String scope) throws Exception {
+	public int verifyToken(String accessToken, String scope) throws Exception {
 
 		Map<String, Object> map = null;
 		try {
@@ -39,6 +39,10 @@ public class AuthorizationService {
 		if(expiredAt.before(now)) {
 			throw new ExpiredAccessTokenException("期限切れのアクセストークンです");
 		}
+
+		int userNo = (int)map.get("user_no");
+
+		return userNo;
 
 
 

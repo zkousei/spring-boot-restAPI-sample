@@ -28,11 +28,13 @@ public class LoginService {
 			return null;
 		}
 
+		int userNo = (int)map.get("user_no");
 		String userId = (String)map.get("user_id");
 		String password = (String)map.get("password");
 		String authority = (String)map.get("authority");
 
 		User user = new User();
+		user.setUserNo(userNo);
 		user.setUserId(userId);
 		user.setPassword(password);
 		user.setAuthority(authority);
@@ -40,7 +42,7 @@ public class LoginService {
 		return user;
 	}
 
-	public String createToken(String id, String authority) {
+	public String createToken(int userNo, String authority) {
 
 		String token = RandomStringUtils.randomAlphanumeric(40);
 		//TODO　引数で受け取ったユーザ権限に応じてscopeを決定
@@ -52,7 +54,7 @@ public class LoginService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String expiredAt = sdf.format(calendar.getTime());
 
-		loginRepository.insertToken(id, token, scope, expiredAt);
+		loginRepository.insertToken(userNo, token, scope, expiredAt);
 
 		return token;
 	}

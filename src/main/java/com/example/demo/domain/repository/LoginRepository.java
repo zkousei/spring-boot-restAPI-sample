@@ -24,14 +24,14 @@ public class LoginRepository {
 
 	}
 
-	public void insertToken(String id, String accessToken, String scope, String expiredAt) {
+	public void insertToken(int userNo, String accessToken, String scope, String expiredAt) {
 
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO ")
-			.append("token_table (user_id, access_token, scope, expired_at) ")
+			.append("token_table (user_no, access_token, scope, expired_at) ")
 			.append("VALUES(?, ?, ?, ?)");
 
-		jdbcTemplate.update(query.toString(),id, accessToken, scope, expiredAt);
+		jdbcTemplate.update(query.toString(),userNo, accessToken, scope, expiredAt);
 
 	}
 
